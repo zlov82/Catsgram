@@ -2,9 +2,11 @@ package ru.yandex.practicum.catsgram.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.tags.Param;
 import ru.yandex.practicum.catsgram.enums.SortOrder;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.NotFoundException;
+import ru.yandex.practicum.catsgram.exception.ParameterNotValidException;
 import ru.yandex.practicum.catsgram.model.Post;
 
 import java.time.Instant;
@@ -21,7 +23,9 @@ public class PostService {
     UserService userService;
 
     public Collection<Post> findAll(Integer from, Integer size, String sort) {
+
         Optional<SortOrder> sortOrder = Optional.ofNullable(SortOrder.from(sort));
+
         List<Post> sortedPosts = new ArrayList<>();
 
         if (sortOrder.isPresent() && sortOrder.get().equals(SortOrder.ASCENDING)) {
